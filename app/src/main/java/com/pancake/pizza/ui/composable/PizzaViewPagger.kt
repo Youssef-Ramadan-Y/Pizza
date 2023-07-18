@@ -13,15 +13,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.pancake.pizza.R
+import com.pancake.pizza.ui.screens.PizzaUIState
 
 // todo 2
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun PizzaViewPager() {
-    val pagerState = rememberPagerState()
+fun PizzaViewPager(
+    state: PizzaUIState,
+    pagerState: PagerState,
+) {
+
 
     Box(
         modifier = Modifier
@@ -42,14 +47,13 @@ fun PizzaViewPager() {
             modifier = Modifier.align(Alignment.Center),
             count = 5,
             state = pagerState,
-        ) { pizza ->
-            when(pizza) {
-                0 -> Image(painter = painterResource(id = R.drawable.bread_1), contentDescription = null )
-                1 -> Image(painter = painterResource(id = R.drawable.bread_2), contentDescription = null )
-                2 -> Image(painter = painterResource(id = R.drawable.bread_3), contentDescription = null )
-                3 -> Image(painter = painterResource(id = R.drawable.bread_4), contentDescription = null )
-                4 -> Image(painter = painterResource(id = R.drawable.bread_5), contentDescription = null )
-            }
+
+            ) { pizza ->
+            Image(
+                modifier = Modifier.size(state.size),
+                painter = painterResource(id = state.pizzaList[pizza]),
+                contentDescription = null
+            )
         }
     }
 }
@@ -57,5 +61,5 @@ fun PizzaViewPager() {
 @Preview
 @Composable
 fun PreviewPizzaViewPager() {
-    PizzaViewPager()
+
 }
