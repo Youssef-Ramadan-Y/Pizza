@@ -88,7 +88,7 @@ fun IngredientAnimation(state: Ingredients, size : Float) {
         Image(
             modifier = Modifier.size(size.dp),
             painter = painterResource(id = state.image),
-            contentDescription = "plate",
+            contentDescription = "ingredient",
         )
     }
 }

@@ -3,7 +3,6 @@ package com.pancake.pizza.ui.composable
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -38,7 +37,6 @@ enum class BoxState {
     Large,
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PizzaSizeButtons(
     state: OrderUiState,
@@ -88,7 +86,6 @@ fun PizzaSizeButtons(
             ) {
                 Text(text = "S", fontSize = 24.sp, color = Color.Black)
             }
-//            Spacer(modifier = Modifier.width(16.dp))
             Button(
                 onClick = {
                     boxState = BoxState.Medium
@@ -101,7 +98,6 @@ fun PizzaSizeButtons(
             ) {
                 Text(text = "M", fontSize = 24.sp, color = Color.Black)
             }
-//            Spacer(modifier = Modifier.width(16.dp))
             Button(
                 onClick = {
                     boxState = BoxState.Large
@@ -112,10 +108,7 @@ fun PizzaSizeButtons(
                 Text(text = "L", fontSize = 24.sp, color = Color.Black)
             }
         }
-
-
     }
-
 }
 
 
