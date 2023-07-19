@@ -10,6 +10,10 @@ import javax.inject.Inject
 class PizzaViewModel @Inject constructor() : BaseViewModel<OrderUiState>(OrderUiState()) {
 
     init {
+        getData()
+    }
+
+    fun getData() {
         updateState {
             it.copy(
                 pizzaList = pizzaList(),
@@ -20,7 +24,6 @@ class PizzaViewModel @Inject constructor() : BaseViewModel<OrderUiState>(OrderUi
                 it.copy(ingredients = pizzaIngredients())
             })
         }
-
     }
 
     fun onChangePizzaSize(position: Int, newSize: Float) {
@@ -38,40 +41,36 @@ class PizzaViewModel @Inject constructor() : BaseViewModel<OrderUiState>(OrderUi
     }
 
     fun onIngredientsClick(ingredientsPosition: Int, pizzaPosition: Int) {
-        updateState {
-            it.copy(
-                it.pizzaList.mapIndexed { pizzaIndex, pizza ->
-                    if (pizzaIndex == pizzaPosition) {
-                        pizza.copy(
-                            ingredients = pizza.ingredients.mapIndexed { index, ingredient ->
-                                if (index == ingredientsPosition) {
-                                    ingredient.copy(isSelected = !ingredient.isSelected)
-                                } else {
-                                    ingredient.copy(isSelected = ingredient.isSelected)
-                                }
-                            },
-                        )
-                    } else {
-                        pizza.copy(
-                            ingredients = pizza.ingredients.mapIndexed { index, ingredients ->
-                                ingredients.copy(isSelected = ingredients.isSelected)
-                            },
-                        )
-                    }
-                },
-                currentPage = pizzaPosition,
-            )
-        }
-        // see if it has ingredients
-        updateState {
-            it.copy(pizzaList = it.pizzaList.mapIndexed { pizzaIndex, pizza ->
-                if (pizza.ingredients.isEmpty()) {
-                    pizza.copy(hasIngredients = false)
-                } else {
-                    pizza.copy(hasIngredients = true)
-                }
-            })
-        }
+        updateState { currentState ->
+            val updatedPizzaList = updateIngredients(currentState.pizzaList, pizzaPosition, ingredientsPosition)
+            val updatedPizzaListWithIngredientsFlag = updateHasIngredientsFlag(updatedPizzaList)
 
+            currentState.copy(pizzaList = updatedPizzaListWithIngredientsFlag, currentPage = pizzaPosition)
+        }
     }
+
+    private fun updateIngredients(pizzaList: List<Pizza>, pizzaPosition: Int, ingredientsPosition: Int): List<Pizza> {
+        return pizzaList.mapIndexed { index, pizza ->
+            if (index == pizzaPosition) {
+                val updatedIngredients = pizza.ingredients.mapIndexed { ingredientIndex, ingredient ->
+                    if (ingredientIndex == ingredientsPosition) {
+                        ingredient.copy(isSelected = !ingredient.isSelected)
+                    } else {
+                        ingredient
+                    }
+                }
+                pizza.copy(ingredients = updatedIngredients)
+            } else {
+                pizza
+            }
+        }
+    }
+
+    private fun updateHasIngredientsFlag(pizzaList: List<Pizza>): List<Pizza> {
+        return pizzaList.map { pizza ->
+            pizza.copy(hasIngredients = pizza.ingredients.isNotEmpty())
+        }
+    }
+
+
 }
