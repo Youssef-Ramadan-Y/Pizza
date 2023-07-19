@@ -18,7 +18,7 @@ fun IngredientsList(
 
     LazyRow(
         contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         itemsIndexed(state.pizzaList[pagerState].ingredients) { index, item: Ingredients ->
             IngredientsCircle(

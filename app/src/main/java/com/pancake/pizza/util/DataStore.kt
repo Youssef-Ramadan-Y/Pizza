@@ -18,8 +18,8 @@ object DataStore {
     fun pizzaIngredients() = listOf(
         Ingredients(id = 0, icon = R.drawable.ic_basil, image = R.drawable.basil),
         Ingredients(id = 1, icon = R.drawable.ic_onion, image = R.drawable.onion),
-        Ingredients(id = 2, icon = R.drawable.ic_mushroom, image = R.drawable.mushroom),
         Ingredients(id = 3, icon = R.drawable.ic_broccoli, image = R.drawable.broccoli),
+        Ingredients(id = 2, icon = R.drawable.ic_mushroom, image = R.drawable.mushroom),
         Ingredients(id = 4, icon = R.drawable.ic_sausage, image = R.drawable.sausage),
     )
 }

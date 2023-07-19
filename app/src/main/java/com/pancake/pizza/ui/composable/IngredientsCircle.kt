@@ -31,7 +31,7 @@ fun IngredientsCircle(
         contentAlignment = Alignment.Center
     ) {
         Image(
-            modifier = Modifier.size(32.dp),
+            modifier = Modifier.size(42.dp),
             painter = painterResource(id = state.icon),
             contentDescription = "ingredients"
         )

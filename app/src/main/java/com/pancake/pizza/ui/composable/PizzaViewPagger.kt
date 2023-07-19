@@ -42,7 +42,7 @@ fun PizzaViewPager(
         Image(
             modifier = Modifier
                 .align(Alignment.Center)
-                .size(250.dp),
+                .size(264.dp),
             painter = painterResource(id = R.drawable.plate),
             contentDescription = null,
         )
