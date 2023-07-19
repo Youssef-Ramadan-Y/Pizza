@@ -31,7 +31,7 @@ fun IconButton(
         colors = ButtonDefaults.buttonColors(Brown)
     ) {
         Icon(
-            modifier = Modifier.padding(end = 4.dp),
+            modifier = Modifier.padding(start = 8.dp,end = 8.dp),
             painter = painterResource(id = R.drawable.ic_shopping_cart),
             contentDescription = "shopping icon"
         )
@@ -40,7 +40,7 @@ fun IconButton(
             fontSize = 16.sp,
             color = Color.White,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp)
         )
     }
 }

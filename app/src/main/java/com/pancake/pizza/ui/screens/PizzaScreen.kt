@@ -12,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -26,6 +25,7 @@ import com.pancake.pizza.ui.composable.IconButton
 import com.pancake.pizza.ui.composable.IngredientsList
 import com.pancake.pizza.ui.composable.PizzaSizeButtons
 import com.pancake.pizza.ui.composable.PizzaViewPager
+import com.pancake.pizza.ui.theme.Gray
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -87,7 +87,7 @@ fun PizzaContent(
             text = "Customize your pizza",
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
-            color = Color.Gray,
+            color = Gray,
         )
 
         IngredientsList(
@@ -101,7 +101,7 @@ fun PizzaContent(
         IconButton(
             stringId = R.string.add_to_cart,
             modifier = Modifier
-                .padding(24.dp)
+                .padding(bottom = 56.dp)
                 .align(Alignment.CenterHorizontally),
         ) {
 
