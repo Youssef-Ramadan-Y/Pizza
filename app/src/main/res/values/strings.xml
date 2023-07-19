@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Pizza</string>
     <string name="m">M</string>
+    <string name="add_to_cart">Add to Cart</string>
 </resources>

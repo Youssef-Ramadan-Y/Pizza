@@ -11,36 +11,35 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pancake.pizza.R
+import com.pancake.pizza.ui.theme.Brown
 
 @Composable
 fun IconButton(
-    stringId: Int, onClickEvent: () -> Unit
+    modifier: Modifier = Modifier, stringId: Int, onClickEvent: () -> Unit,
 ) {
     Button(
-        onClick = onClickEvent, modifier = Modifier
+        onClick = onClickEvent, modifier = modifier
             .height(55.dp)
-            .background(Color.Black, RoundedCornerShape(100.dp)),
-        colors = ButtonDefaults.buttonColors(Color.Black)
+            .background(Brown, RoundedCornerShape(16.dp)),
+        colors = ButtonDefaults.buttonColors(Brown)
     ) {
         Icon(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_launcher_background),
-            contentDescription = null,
-            tint = Color.White,
-            modifier = Modifier.background(Color.White)
+            modifier = Modifier.padding(end = 4.dp),
+            painter = painterResource(id = R.drawable.ic_shopping_cart),
+            contentDescription = "shopping icon"
         )
         Text(
             text = stringResource(stringId),
             fontSize = 16.sp,
             color = Color.White,
-            fontWeight = FontWeight.Normal,
+            fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(start = 8.dp)
         )
     }

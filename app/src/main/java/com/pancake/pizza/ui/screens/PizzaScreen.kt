@@ -6,10 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,6 +22,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.pancake.pizza.R
+import com.pancake.pizza.ui.composable.IconButton
 import com.pancake.pizza.ui.composable.IngredientsList
 import com.pancake.pizza.ui.composable.PizzaSizeButtons
 import com.pancake.pizza.ui.composable.PizzaViewPager
@@ -44,9 +40,9 @@ fun PizzaScreen(
         modifier = modifier,
         pagerState = pagerState,
         state = state,
-        onSmallClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, 180f)},
-        onMediumClicked = {viewModel.onChangePizzaSize(pagerState.currentPage, 200f)},
-        onLargeClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, 220f)},
+        onSmallClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, 180f) },
+        onMediumClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, 200f) },
+        onLargeClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, 220f) },
         onSelectIngredients = viewModel::onIngredientsClick
     )
 }
@@ -60,7 +56,7 @@ fun PizzaContent(
     onSmallClicked: () -> Unit,
     onMediumClicked: () -> Unit,
     onLargeClicked: () -> Unit,
-    onSelectIngredients: (ingredientsId: Int, pizzaPosition:Int) -> Unit,
+    onSelectIngredients: (ingredientsId: Int, pizzaPosition: Int) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
 
@@ -97,26 +93,20 @@ fun PizzaContent(
         IngredientsList(
             state = state,
             pagerState = pagerState.currentPage,
-            onIngredientSelected = {id, pageState ->  onSelectIngredients(id,pageState)},
+            onIngredientSelected = { id, pageState -> onSelectIngredients(id, pageState) },
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Button(
+        IconButton(
+            stringId = R.string.add_to_cart,
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp),
-            colors = ButtonDefaults.buttonColors(Color.Black),
-            shape = RoundedCornerShape(8.dp),
-            onClick = {}
+                .padding(24.dp)
+                .align(Alignment.CenterHorizontally),
         ) {
-            Icon(
-                modifier = Modifier.padding(end = 4.dp),
-                painter = painterResource(id = R.drawable.ic_basil),
-                contentDescription = "shopping icon"
-            )
-            Text(text = "Add to Cart")
+
         }
+
 
     }
 }
