@@ -1,20 +1,19 @@
 package com.pancake.pizza.ui.composable
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.InfiniteRepeatableSpec
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,15 +21,10 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.pancake.pizza.R
+import com.pancake.pizza.ui.screens.Ingredients
 import com.pancake.pizza.ui.screens.OrderUiState
 
 // todo 2
-
-enum class PizzaState {
-    Small,
-    Medium,
-    Large,
-}
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -38,21 +32,11 @@ fun PizzaViewPager(
     state: OrderUiState,
     pagerState: PagerState,
 ) {
-    val infiniteTransition = rememberInfiniteTransition()
-
-    val floatTransition by  infiniteTransition.animateFloat(
-        initialValue = 64f,
-        targetValue = 280f,
-        animationSpec = InfiniteRepeatableSpec(
-            tween(5000),
-            RepeatMode.Reverse,
-        )
-    )
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(.5f),
+            .fillMaxHeight(.4f),
         contentAlignment = Alignment.Center,
     ) {
         Image(
@@ -65,32 +49,47 @@ fun PizzaViewPager(
 
         // the view pager here
         HorizontalPager(
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier.fillMaxWidth(),
             count = state.pizzaList.size,
             state = pagerState,
 
             ) { page ->
+
             Box() {
                 Image(
                     modifier = Modifier
-                        .animateContentSize()
                         .size(state.pizzaList[page].pizzaSize.dp),
+                    contentScale = ContentScale.Crop,
                     painter = painterResource(id = state.pizzaList[page].image),
                     contentDescription = "Pizza"
                 )
-                if (state.pizzaList[page].ingredients.isNotEmpty()) {
-                    for (ingredient in state.pizzaList[page].ingredients) {
-                        Image(
-                            modifier = Modifier
-                                .size(floatTransition.dp),
-                            painter = painterResource(id = ingredient.image),
-                            contentDescription = "Pizza"
-                        )
-                    }
-                }
+            }
 
+
+
+            state.pizzaList[pagerState.currentPage].ingredients.forEach { ingredient ->
+                IngredientAnimation(state = ingredient, size = state.pizzaList[page].pizzaSize)
             }
         }
+    }
+
+
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun IngredientAnimation(state: Ingredients, size : Float) {
+
+    AnimatedVisibility(
+        visible = state.isSelected,
+        enter = scaleIn(initialScale = 4f) + fadeIn(),
+        exit = fadeOut()
+    ) {
+        Image(
+            modifier = Modifier.size(size.dp),
+            painter = painterResource(id = state.image),
+            contentDescription = "plate",
+        )
     }
 }
 

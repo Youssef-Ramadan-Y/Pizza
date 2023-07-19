@@ -3,6 +3,7 @@ package com.pancake.pizza.ui.composable
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -35,9 +38,11 @@ enum class BoxState {
     Large,
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PizzaSizeButtons(
     state: OrderUiState,
+    pagerState: Int,
     onSmallClicked: () -> Unit,
     onMediumClicked: () -> Unit,
     onLargeClicked: () -> Unit,
@@ -45,10 +50,11 @@ fun PizzaSizeButtons(
     var boxState by remember { mutableStateOf(BoxState.Medium) }
 
     val offset: Dp by animateDpAsState(
-        targetValue = when (boxState) {
-            BoxState.Small -> (-66).dp
-            BoxState.Medium -> 0.dp
-            BoxState.Large -> 66.dp
+        targetValue = when (state.pizzaList[pagerState].pizzaSize) {
+            180f -> (-66).dp
+            200f -> 0.dp
+            220f -> 66.dp
+            else -> 0.dp
         },
         animationSpec = tween(
             durationMillis = 500,
@@ -112,18 +118,21 @@ fun PizzaSizeButtons(
 
 }
 
+
+
 @Composable
 fun SizeButton(
     modifier: Modifier = Modifier,
-    color: Color = Color.Red,
     offset: Dp,
 ) {
-    Box(
+    Card(
         modifier = modifier
-            .size(36.dp)
+            .size(42.dp)
             .absoluteOffset(x = offset)
             .clip(CircleShape)
-            .background(Color.Red),
+            .shadow(elevation = 5.dp, spotColor = Color.Black)
+            .background(Color.White),
+        content = {}
     )
 }
 
