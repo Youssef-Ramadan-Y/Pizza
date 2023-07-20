@@ -1,5 +1,7 @@
 package com.pancake.pizza.ui.screens
 
+import com.pancake.pizza.util.PizzaSizes
+
 
 data class OrderUiState(
     val pizzaList: List<Pizza> = emptyList(),
@@ -9,12 +11,12 @@ data class OrderUiState(
 
 data class Pizza(
     val id: Int = 0,
-    val pizzaSize: Float = 200f,
+    val pizzaSize: PizzaSizes = PizzaSizes.Medium,
     val image: Int = 0,
     val hasIngredients: Boolean = false,
     val ingredients: List<Ingredients> = emptyList(),
 
-)
+    )
 
 data class Ingredients(
     val id: Int = 0,

@@ -3,6 +3,7 @@ package com.pancake.pizza.ui.screens
 import com.pancake.pizza.util.DataStore.pizzaList
 import com.pancake.pizza.util.DataStore.pizzaIngredients
 import com.pancake.pizza.ui.screens.base.BaseViewModel
+import com.pancake.pizza.util.PizzaSizes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,11 +27,11 @@ class PizzaViewModel @Inject constructor() : BaseViewModel<OrderUiState>(OrderUi
         }
     }
 
-    fun onChangePizzaSize(position: Int, newSize: Float) {
+    fun onChangePizzaSize(position: Int, newSize: PizzaSizes) {
         updatePizzaSize(position, newSize)
     }
 
-    private fun updatePizzaSize(position: Int, newSize: Float) {
+    private fun updatePizzaSize(position: Int, newSize: PizzaSizes) {
         updateState { currentState ->
             currentState.copy(
                 pizzaList = currentState.pizzaList.map { pizza ->

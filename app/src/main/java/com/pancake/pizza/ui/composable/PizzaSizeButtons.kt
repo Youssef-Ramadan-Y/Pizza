@@ -7,13 +7,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pancake.pizza.ui.screens.OrderUiState
+import com.pancake.pizza.util.PizzaSizes
 
 enum class BoxState {
     Small,
@@ -49,10 +50,9 @@ fun PizzaSizeButtons(
 
     val offset: Dp by animateDpAsState(
         targetValue = when (state.pizzaList[pagerState].pizzaSize) {
-            180f -> (-66).dp
-            200f -> 0.dp
-            220f -> 66.dp
-            else -> 0.dp
+            PizzaSizes.Small -> (-66).dp
+            PizzaSizes.Medium -> 0.dp
+            PizzaSizes.Large -> 66.dp
         },
         animationSpec = tween(
             durationMillis = 500,
@@ -70,10 +70,12 @@ fun PizzaSizeButtons(
 
         SizeButton(
             offset = offset,
-            modifier = Modifier.wrapContentSize(Alignment.BottomStart)
+            modifier = Modifier.wrapContentSize(Alignment.Center)
         )
 
-        Row {
+        Row(
+            modifier = Modifier.align(Alignment.Center)
+        ) {
             Button(
                 onClick = {
                     boxState = BoxState.Small
@@ -118,14 +120,19 @@ fun SizeButton(
     modifier: Modifier = Modifier,
     offset: Dp,
 ) {
-    Card(
-        modifier = modifier
+    Box(
+        modifier = Modifier
             .size(42.dp)
+            .fillMaxSize()
             .absoluteOffset(x = offset)
+            .shadow(
+                elevation = 6.dp,
+                shape = CircleShape,
+                ambientColor = Color.Black,
+                spotColor = Color.Black
+            )
             .clip(CircleShape)
-            .shadow(elevation = 5.dp, spotColor = Color.Black)
-            .background(Color.White),
-        content = {}
+            .background(Color.White)
     )
 }
 
@@ -134,5 +141,11 @@ fun SizeButton(
 fun PreviewPizzaSizeButton(
 
 ) {
-//    PizzaSizeButtons(state)
+    PizzaSizeButtons(
+        OrderUiState(),
+        1,
+        {},
+        {},
+        {}
+    )
 }

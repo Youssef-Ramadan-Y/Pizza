@@ -26,6 +26,7 @@ import com.pancake.pizza.ui.composable.IngredientsList
 import com.pancake.pizza.ui.composable.PizzaSizeButtons
 import com.pancake.pizza.ui.composable.PizzaViewPager
 import com.pancake.pizza.ui.theme.Gray
+import com.pancake.pizza.util.PizzaSizes
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -40,9 +41,9 @@ fun PizzaScreen(
         modifier = modifier,
         pagerState = pagerState,
         state = state,
-        onSmallClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, 180f) },
-        onMediumClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, 200f) },
-        onLargeClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, 220f) },
+        onSmallClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, PizzaSizes.Small) },
+        onMediumClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, PizzaSizes.Medium) },
+        onLargeClicked = { viewModel.onChangePizzaSize(pagerState.currentPage, PizzaSizes.Large) },
         onSelectIngredients = viewModel::onIngredientsClick
     )
 }

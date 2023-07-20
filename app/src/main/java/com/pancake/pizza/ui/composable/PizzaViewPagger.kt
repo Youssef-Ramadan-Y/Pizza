@@ -24,7 +24,6 @@ import com.pancake.pizza.R
 import com.pancake.pizza.ui.screens.Ingredients
 import com.pancake.pizza.ui.screens.OrderUiState
 
-// todo 2
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -58,23 +57,22 @@ fun PizzaViewPager(
             Box() {
                 Image(
                     modifier = Modifier
-                        .size(state.pizzaList[page].pizzaSize.dp),
+                        .size(state.pizzaList[page].pizzaSize.size.dp),
                     contentScale = ContentScale.Crop,
                     painter = painterResource(id = state.pizzaList[page].image),
                     contentDescription = "Pizza"
                 )
             }
 
-
-
             state.pizzaList[pagerState.currentPage].ingredients.forEach { ingredient ->
-                IngredientAnimation(state = ingredient, size = state.pizzaList[page].pizzaSize)
+                IngredientAnimation(state = ingredient, size = state.pizzaList[page].pizzaSize.size)
             }
         }
     }
 
 
 }
+
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
